@@ -1,0 +1,77 @@
+---
+title: My dynamic report
+output: html_fragment
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE, error=FALSE)
+
+```
+
+```{css}
+body {
+  color: #FFFFFF;
+  background-color: #000000;
+}
+
+h2 {
+  font-family: 'Comic Sans MS', 'Arial', sans-serif;
+  font-size: 30px
+}
+
+h3 {
+  font-family: 'Comic Sans MS', 'Arial', sans-serif;
+  font-size: 25px
+}
+
+
+p {
+  font-weight: bold;
+  font-size: 15px;
+}
+
+li {
+  font-size: 15px;
+}
+```
+
+## What's going on with this data?
+This report focuses on personal hygiene from 2 simple questions, "How many times do you shower per week?" and "How frequently do you brush teeth a day". These two simple question in my opinion are some crucial aspects on personal hygiene. 
+
+```{r}
+library(tidyverse)
+
+# assign the URL to a variable for better readability
+csv_url <- "https://docs.google.com/spreadsheets/d/e/2PACX-1vS4pjD33pT69uThOjYf3BGTX19x5PZsl-_962Us3dtrVC0TYIEU9RYEPNlejAA2RaNtxwIb98Xk0Dk_/pub?output=csv"
+
+logged_data <- read_csv(csv_url)
+
+latest_data <- logged_data %>%
+  rename(
+    showers_per_week = 2,
+    tooth_brush_daily_freq = 3,
+    wash_hands_after_bathroom = 4,
+    gender = 5
+  )
+```
+
+### Maximum showers in a week from my form
+```{r}
+latest_data$showers_per_week %>% max(na.rm = TRUE)
+```
+
+### Average times people brushed their teeth in a day
+```{r}
+latest_data$showers_per_week %>% mean(na.rm = TRUE)
+
+ggplot(latest_data) +
+  geom_bar(aes(x = showers_per_week)) + 
+  labs(title = "Showers per week", x = "Number of showers",
+       y = "Response count")
+
+ggplot(latest_data) +
+  geom_bar(aes(x = showers_per_week, fill = tooth_brush_daily_freq)) +
+  labs(title = "Showers per week by tooth brushing frequency", 
+  x = "Number of showers", y = "Response count", 
+  fill = "Daily tooth brushing frequency")
+```
