@@ -16,4 +16,4 @@
 
 A new meme that is different from my old meme\
 ![Hmm for some reason my picture didn't show](https://media1.tenor.com/m/pMhSj9NfCXsAAAAd/saul-goodman-better-call-saul.gif)\
-***Wheneven I need my rights**
+***Whenever I need my rights**
